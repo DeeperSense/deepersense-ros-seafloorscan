@@ -54,23 +54,22 @@ cd ~/catkin_ws/src
 git clone `https://github.com/DeeperSense/deepersense-ros-seafloorscan`
 ```
 
-First build the custom messages
+First build the custom messages.
 ```
 cd ..
 catkin build deepersense_msgs
 source devel/setup.bash 
 ```
 
-Build the rest of the packages
+Then build the rest of the packages.
 ```
 catkin build
 source devel/setup.bash
 ```
 
-
 ## Usage
 
-There are two modalities:
+There are two input modalities:
 
 1. **XTF only**
     - Set the parameter **/simulator/combined_data** to **True**. 
@@ -126,28 +125,44 @@ They can be run from the same computer or from different ones provided they are 
 
 Modifiable parameters inside **/deepersense_main_pkg/cfg/pipeline_config.yaml**:
 
-- /sonar/num_samples &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; side-scan sonar number of samples in .xtf file
-- /sonar/slant_range &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; side-scan sonar slant-range in .xtf file
-- /simulator/separate_inputs &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; modality 1 or 2
-- /simulator/publish_rate &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; xtf publish rate when modality 1 selected
-- /simulator/nav_topic_name &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; navigation topic name in .bag when modality 2 selected
-- /simulator/xtf_file &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; side-scan sonar .xtf file name 
-- /simulator/ping_start &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ping index to start reading the .xtf file from
-- /simulator/nav_rosbag_file &emsp;&emsp;&emsp;&emsp;&emsp;&ensp; navigation .bag file name 
-- /simulator/robot_dae_file &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; optional .dae file for the robot visualisation on rviz 
-- /undistortion/correct_waterfall &emsp;&emsp;&emsp;&ensp; perform waterfall undistortion using navigation data 
-- /undistortion/max_pings &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; number of pings to use for undistortion and inference
-- /undistortion/interpolation_window &emsp;&nbsp; number of pings between previous inference and the next 
-- /behaviour/num_steps &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; number of steps to visualise the robot change of behaviour on rviz 
-- /prediction/patch_shape &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; patch shape to extract from waterfall for inference (smaller or equal to *max_pings*)
-- /prediction/stride &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; stride to extract patches from waterfall 
-- /behaviour/step_rate &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; number of steps per second (Hz)
-- /behaviour/slow_down_rate &emsp;&emsp;&emsp;&emsp;&emsp; slow down rate wrt current velocity  
-- /visualisation/resolution &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp; grid-cells resolution visualisation on rviz 
-- /visualisation/publish_prediction &emsp;&emsp;&emsp; publish model inference prediction on Rviz
-- /visualisation/publish_grid_cells &emsp;&emsp;&emsp;&nbsp; publish grid cells on Rviz
-- /visualisation/publish_swath_lines &emsp;&emsp;&nbsp; publish swath lines on Rviz
-- /visualisation/publish_undistortion &emsp;&emsp; publish undistorted waterfall on Rviz
-- /visualisation/publish_waterfall &emsp;&emsp;&emsp;&ensp; publish distorted waterfall on Rviz
+Sonar parameters
+- **/sonar/num_samples**: side-scan sonar number of samples in .xtf file
+- **/sonar/slant_range**: side-scan sonar slant-range in .xtf file
 
+Simulator parameters
+- **/simulator/separate_inputs**: modality 1 or 2
+- **/simulator/publish_rate:** xtf publish rate when modality 1 selected
+- **/simulator/nav_topic_name** : navigation topic name in .bag when modality 2 selected
+- **/simulator/pings_topic_name**: pings topic name 
+- **/simulator/ping_info_topic_name**: ping info topic name 
+- **/simulator/xtf_file**: scan sonar .xtf file name 
+- **/simulator/ping_start** : ping index to start reading the .xtf file from
+- **/simulator/nav_rosbag_file**: navigation .bag file name 
+- **/simulator/robot_dae_file**: optional .dae file for the robot visualisation on rviz 
+- **/simulator/robot_mesh_rotation_offset**: fixed rotational offset (degrees) of mesh  
+
+Waterfall correction parameters 
+- **/undistortion/correct_waterfall**: perform waterfall undistortion using navigation data 
+- **/undistortion/max_pings**: number of pings to use for undistortion and inference
+- **/undistortion/interpolation_window**: number of pings between previous inference and the next 
+
+Behaviour parameters
+- **/behaviour/num_steps** : number of steps to visualise the robot change of behaviour on rviz 
+- **/behaviour/step_rate**: number of steps per second (Hz)
+- **/behaviour/slow_down_rate**: slow down rate wrt current velocity  
+- **/behaviour/min_confidence**: minimum average confidence, triggers stop behaviour
+
+Prediction parameters
+- **/prediction/patch_shape**: patch shape to extract from waterfall for inference (smaller or equal to *max_pings*)
+- **/prediction/stride**: stride to extract patches from waterfall 
+- **/prediction/encoder**: encoder type
+- **/prediction/decoder**: decoder type
+
+Visualisation parameters
+- **/visualisation/resolution**: grid-cells resolution visualisation on rviz 
+- **/visualisation/publish_prediction**: publish model inference prediction on Rviz
+- **/visualisation/publish_grid_cells**: publish grid cells on Rviz
+- **/visualisation/publish_swath_lines**: publish swath lines on Rviz
+- **/visualisation/publish_undistortion**: publish undistorted waterfall on Rviz
+- **/visualisation/publish_waterfall**: publish distorted waterfall on Rviz
 
