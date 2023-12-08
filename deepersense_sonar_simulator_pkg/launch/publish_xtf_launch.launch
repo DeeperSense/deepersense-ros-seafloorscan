@@ -1,0 +1,10 @@
+<launch>
+
+   
+    <arg name="config_dir_path"     default="$(find deepersense_sonar_simulator_pkg)/cfg"/>
+    
+    <node pkg="deepersense_sonar_simulator_pkg" type="publish_xtf_to_topic.py"  name="publish_xtf_node" output="screen">
+        <param name="config_dir_path"    type="str"  value="$(arg config_dir_path)"/>
+    </node>
+
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="classify"            default="1"/>
+    <arg name="behaviour"           default="1"/>
+
+    <rosparam command="load" file="$(find deepersense_main_pkg)/cfg/pipeline_config.yaml"/>
+
+    <group if="$(arg classify)">
+        <include file="$(find deepersense_classify_segment_pkg)/launch/classify_segment.launch"/>
+    </group>
+
+    <include file="$(find deepersense_waterfall_gen_pkg)/launch/waterfall_gen_launch.launch"/>
+
+    <group if="$(arg behaviour)">
+        <include file="$(find deepersense_behaviour_change_pkg)/launch/behaviour_change_launch.launch"/>
+    </group>
+
+</launch>

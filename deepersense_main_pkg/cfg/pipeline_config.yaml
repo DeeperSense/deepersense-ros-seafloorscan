@@ -1,0 +1,40 @@
+sonar:
+    num_samples: 3200 #2048   #3200 # bigger than patch_shape_x
+    slant_range: 50.0 #39.73509979248047  #50.0
+
+simulator:
+    separate_inputs: true                                   # use xtf containing both sonar and nav data, else xtf + rosbag  
+    publish_rate: 20                                        # only if combined is false 
+    nav_topic_name: "/girona500/navigator/navigation"      # only if using rosbag for navigation data and combined is true
+    pings_topic_name: "/pings"
+    ping_info_topic_name: "/ping_info"
+    xtf_file: "st_feliu_221028151800.xtf" # TODO: 1233 from 26/10/22# 1412 1442 28/10 diff slant range 75 not 50
+    ping_start: 0                                             # ping index start
+    nav_rosbag_file: "rosbag_nav_only_2023-11-15-15-11-13.bag"   #"deepersense_2022-10-28-13-16-26.bag"
+    robot_dae_file: "package://deepersense_vis_pkg/cfg/girona1000_description/resources/meshes/girona1000.dae"
+    robot_mesh_rotation_offset: [90.0, 0.0, -90.0]
+
+undistortion:
+    correct_waterfall: true
+    max_pings: 256 # bigger than patch_shape_y
+    interpolation_window: 200
+
+behaviour:
+    num_steps: 50
+    step_rate: 5
+    slow_down_rate: 0.3     # triggered by change in class observation 
+    min_confidence: 0.85     # triggers a stop behaviour 
+
+prediction:
+    patch_shape: 256
+    stride: 128
+    encoder: 'sima_mini'
+    decoder: 'atrous'
+
+visualisation:
+    resolution: 0.3 
+    publish_prediction: true
+    publish_grid_cells: true
+    publish_swath_lines: true
+    publish_undistortion: true
+    publish_waterfall: true

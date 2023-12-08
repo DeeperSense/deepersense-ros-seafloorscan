@@ -1,0 +1,11 @@
+<launch>
+
+	<arg name="rosbag_output_dir"		default="$(find deepersense_record_pkg)/cfg/"/>
+	<arg name="topics_file_path"		default="$(find deepersense_record_pkg)/cfg/topics.txt"/>
+	
+	<node pkg="deepersense_record_pkg" type="record_rosbag.py" name="record_rosbag_node" output="screen">
+		<param name="rosbag_output_dir" 	type="str" value="$(arg rosbag_output_dir)"/>
+		<param name="topics_file_path"  	type="str" value="$(arg topics_file_path)"/>
+	</node>
+
+</launch>

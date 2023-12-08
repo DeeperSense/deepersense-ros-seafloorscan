@@ -1,0 +1,16 @@
+<launch>
+
+    <arg name="model_path"   default="$(find deepersense_main_pkg)/cfg/weights.pth"/>
+    <arg name="config_path"  default="$(find deepersense_main_pkg)/cfg/model_config.yaml"/>
+    
+    <arg name="output_dir"   default="$(find deepersense_classify_segment_pkg)/output/"/>
+
+    <node pkg="deepersense_classify_segment_pkg" type="classify_and_segment_node.py" name="classify_segment_node"  output="screen">
+        
+        <param name="model_path"  type="str"  value="$(arg model_path)"/>
+        <param name="config_path" type="str"  value="$(arg config_path)"/>
+        <param name="output_dir" type="str"  value="$(arg output_dir)"/>
+
+    </node>
+
+</launch>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>deepersense_classify_segment_pkg</name>
+  <version>0.0.0</version>
+  <description>Classification and segmentation package</description>
+
+  <maintainer email="valerio.franchi@udg.edu">Valerio Franchi</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>deepersense_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_export_depend>deepersense_msgs</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <exec_depend>deepersense_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
+
+  <export>
+  </export>
+</package>
