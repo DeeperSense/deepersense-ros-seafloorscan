@@ -28,10 +28,6 @@ class ClassifyAndSegment:
         self.init_pos = None 
 
         # load params from ROS param server 
-        patch_shape_x = rospy.get_param("/sonar/patch_shape_x")
-        patch_shape_y = rospy.get_param("/sonar/patch_shape_y")
-        stride_x = rospy.get_param("/sonar/stride_x")
-        stride_y = rospy.get_param("/sonar/stride_y")
         max_pings = rospy.get_param("/undistortion/max_pings")
         num_samples = rospy.get_param("/sonar/num_samples")
 
@@ -41,6 +37,8 @@ class ClassifyAndSegment:
 
         encoder = rospy.get_param("/prediction/encoder")
         decoder = rospy.get_param("/prediction/decoder")
+        patch_shape_x = patch_shape_y = rospy.get_param("/sonar/patch_shape")
+        stride_x = stride_y = rospy.get_param("/sonar/stride")
         
         self.resolution = rospy.get_param("/visualisation/resolution")
         self.publish_output_image = rospy.get_param("/visualisation/publish_prediction")
@@ -99,7 +97,6 @@ class ClassifyAndSegment:
             patches (_type_): patch images  
         """
         
-        start = datetime.now()
         if (self.current_height == 0):
             self.current_height = self.max_pings
             self.confidences_combined = confidences
@@ -242,22 +239,6 @@ class ClassifyAndSegment:
         Returns:
             _type_: output image 
         """
-
-        data2 = np.asarray(data)
-        image2 = data2.reshape((height, width))
-        image2 = ((image2 - np.min(image2)) / (np.max(image2) - np.min(image2)) * 255.0).astype(np.uint8)
-
-        if distorted:
-            folder_dir = "/home/jetson/catkin_ws/src/deepersense_classify_segment_pkg/output/waterfalls/distorted/"
-            image_name = "waterfall_" + str(len(os.listdir(folder_dir))) + ".png"
-            image_path = os.path.join(folder_dir, image_name)
-            cv2.imwrite(image_path, image2)
-
-        else:
-            folder_dir = "/home/jetson/catkin_ws/src/deepersense_classify_segment_pkg/output/waterfalls/undistorted/"
-            image_name = "waterfall_" + str(len(os.listdir(folder_dir))) + ".png"
-            image_path = os.path.join(folder_dir, image_name)
-            cv2.imwrite(image_path, image2)
 
         data = np.asarray(data) 
         data = np.log10(data + 1e-4)
